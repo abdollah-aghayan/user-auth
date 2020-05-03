@@ -1,4 +1,4 @@
-##Installation instructions
+## Installation instructions
 In order to run the app you need to have one of mysql or mongodb installed 
 
 Two type of database option available `mongodb` `sql`
@@ -23,7 +23,7 @@ or
 go run main.go -db_type=sql
 ```
 
-##Technologies
+## Technologies
 
 library I have used for this app are in the below
 ```sh
@@ -38,7 +38,7 @@ go.mongodb.org/mongo-driver v1.3.2
 golang.org/x/crypto v0.0.0-20200429183012-4b2356b1ed79
 ```
 
-##Requirement
+## Requirement
 
 We should create 3 api as following
 
@@ -48,7 +48,7 @@ We should create 3 api as following
 
 All covered!
 
-##Test
+## Test
 I haven't got time to write test against api yet 
 to test them you can find postman profile in extra folder which you can import and test the api
 
