@@ -1,0 +1,108 @@
+{
+	"info": {
+		"_postman_id": "c044dd99-fff3-4dd8-ad2f-14ec17be3447",
+		"name": "auth-go",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "register user",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"username\":\"123\",\n\t\"password\":\"123\",\n\t\"repeatPassword\":\"123\",\n\t\"email\" :\"test3@test.com\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:6050/register",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "6050",
+					"path": [
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "login user",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"password\":\"123\",\n\t\"email\" :\"test3@test.com\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:6050/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "6050",
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get current user info",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Berear eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdXRob3JpemVkIjp0cnVlLCJleHAiOjE1ODg0NTU0NTMsInVzZXJfaWQiOiI5ZTM4YjI5Ny0xMmY3LTRkNGItODBiMi1kZDUxNTNkMWVjMTcifQ._CST7466blz3U8AvJA4sK-Qa8WvpPTCCmONCW46HiiY",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"password\":\"123\",\n\t\"email\" :\"test@test.com\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:6050/users/me",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "6050",
+					"path": [
+						"users",
+						"me"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
