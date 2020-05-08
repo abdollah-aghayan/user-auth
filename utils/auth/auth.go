@@ -9,6 +9,7 @@ import (
 	"github.com/pkg/errors"
 )
 
+// AuthDetails contains token values
 type AuthDetails struct {
 	UserId string
 }
@@ -27,8 +28,9 @@ func CreateToken(authD AuthDetails, secret string, ex int64) (string, error) {
 	return token.SignedString([]byte(secret))
 }
 
-func TokenValid(token *jwt.Token) (jwt.MapClaims, bool) {
-	//the token claims should conform to MapClaims
+// checkTokenClaims validate a token claims
+func checkTokenClaims(token *jwt.Token) (jwt.MapClaims, bool) {
+	//the token claims should confirm to MapClaims
 	claims, ok := token.Claims.(jwt.MapClaims)
 
 	if !ok && !token.Valid {
@@ -38,8 +40,8 @@ func TokenValid(token *jwt.Token) (jwt.MapClaims, bool) {
 	return claims, true
 }
 
-// VerifyToken parse and validate a token based on secret string
-func VerifyToken(tokenString, secret string) (*jwt.Token, error) {
+// ValidateToken parse and validate a token based on secret string
+func ValidateToken(tokenString, secret string) (*jwt.Token, error) {
 
 	// parse the token
 	token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
@@ -70,14 +72,15 @@ func GetToken(r *http.Request) string {
 	return ""
 }
 
-func ExtractTokenAuth(r *http.Request, secret string) (*AuthDetails, error) {
+// ValidateRequestToken get request token and validate the token
+func ValidateRequestToken(r *http.Request, secret string) (*AuthDetails, error) {
 	reqToken := GetToken(r)
-	token, err := VerifyToken(reqToken, secret)
+	token, err := ValidateToken(reqToken, secret)
 	if err != nil {
 		return nil, err
 	}
 
-	claims, ok := TokenValid(token)
+	claims, ok := checkTokenClaims(token)
 	if !ok {
 		return nil, errors.Errorf("Invalid token %v", token)
 	}

@@ -12,7 +12,7 @@ func TokenAuthMiddleware(secret string) gin.HandlerFunc {
 	return func(c *gin.Context) {
 
 		// extract token and check if valid and not expired
-		authDitail, err := auth.ExtractTokenAuth(c.Request, secret)
+		authDitail, err := auth.ValidateRequestToken(c.Request, secret)
 		if err != nil {
 
 			// return not authorized error

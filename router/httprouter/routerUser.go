@@ -61,7 +61,12 @@ func (u *userRoute) getUserInfo(c *gin.Context) {
 // register user
 func (u *userRoute) registerUser(c *gin.Context) {
 	regUser := domain.RegisterUser{}
-	c.BindJSON(&regUser)
+
+	if bjErr := c.BindJSON(&regUser); bjErr != nil {
+		errh := errorh.BadRequestError("Invalid request!")
+		c.JSON(errh.Code, errh)
+		return
+	}
 
 	// validate data
 	err := regUser.ValidateRegisterUser()
@@ -91,7 +96,11 @@ func (u *userRoute) loginUser(c *gin.Context) {
 
 	loginUsr := domain.LoginUser{}
 
-	c.BindJSON(&loginUsr)
+	if bjErr := c.BindJSON(&loginUsr); bjErr != nil {
+		errh := errorh.BadRequestError("Invalid request!")
+		c.JSON(errh.Code, errh)
+		return
+	}
 
 	err := loginUsr.ValidateLoginUser()
 	if err != nil {
@@ -118,7 +127,13 @@ func (u *userRoute) loginUser(c *gin.Context) {
 	}
 
 	// create token
-	token, _ := auth.CreateToken(authDetail, config.SECERET, ex)
+	token, tErr := auth.CreateToken(authDetail, config.SECERET, ex)
+
+	if tErr != nil {
+		err = errorh.InternalError("Can not create token please try later!")
+		c.JSON(err.Code, err)
+		return
+	}
 
 	res := map[string]interface{}{
 		"user":  user,
